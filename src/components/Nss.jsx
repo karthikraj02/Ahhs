@@ -1,5 +1,25 @@
 import React, { useState, useEffect } from "react";
 
+const icons = {
+  wings: "🛡️",
+  benefits: "🎓",
+  activities: "⚔️",
+  engagement: "🌍",
+  highlights: "🎺",
+  focus: "🔥",
+  motto: "📜",
+  purpose: "🤝",
+  camps: "🏕️",
+  adoption: "🌱",
+  programs: "📅",
+  founded: "🏛️",
+  training: "⛑️",
+  note: "📝",
+  complementary: "🤜🤛",
+  skills: "🎖️",
+  contribution: "🌟",
+};
+
 const nccImages = [
   "https://mgmudupi.ac.in/images/NCC.jpg",
   "https://mgmudupi.ac.in/images/NCC1.jpg",
@@ -9,9 +29,110 @@ const nccImages = [
   "https://mgmudupi.ac.in/images/NCC5.jpg",
   "https://mgmudupi.ac.in/images/NCC6.jpg",
 ];
+
 const rangerImages = ["https://mgmudupi.ac.in/images/Rangers1.jpg"];
 const nssImages = ["https://mgmudupi.ac.in/images/NCC6.jpg"];
 const roversImages = ["https://mgmudupi.ac.in/images/Rangers1.jpg"];
+
+function BulletList({ items }) {
+  return (
+    <ul
+      style={{
+        paddingLeft: "1.4rem",
+        marginTop: "0.5rem",
+        marginBottom: "0",
+        color: "#444",
+        fontSize: 15,
+        lineHeight: 1.6,
+      }}
+    >
+      {items.map((item, i) => (
+        <li
+          key={i}
+          style={{
+            marginBottom: 6,
+            position: "relative",
+            listStyleType: "none",
+            paddingLeft: 20,
+          }}
+        >
+          <span
+            style={{
+              position: "absolute",
+              left: 0,
+              top: "0.4em",
+              color: "#2563EB",
+              fontWeight: "bold",
+              fontSize: 14,
+            }}
+          >
+            •
+          </span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ExpandableItem({ title, icon, children }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      style={{
+        marginBottom: 14,
+        borderRadius: 8,
+        boxShadow: open
+          ? "0 8px 24px rgba(0,0,0,0.15)"
+          : "0 2px 6px rgba(0,0,0,0.1)",
+        transition: "box-shadow 0.3s ease",
+        backgroundColor: "white",
+        overflow: "hidden",
+      }}
+    >
+      <button
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        style={{
+          cursor: "pointer",
+          background: open ? "#2563EB" : "#f0f4ff",
+          color: open ? "white" : "#2563EB",
+          border: "none",
+          padding: "14px 20px",
+          width: "100%",
+          textAlign: "left",
+          fontSize: 18,
+          fontWeight: "600",
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          borderRadius: 8,
+          transition: "background-color 0.3s ease, color 0.3s ease",
+          boxShadow: open ? "0 4px 12px rgba(37, 99, 235, 0.4)" : "none",
+          userSelect: "none",
+        }}
+      >
+        <span style={{ fontSize: 22 }}>{icon}</span>
+        {title}
+        <span style={{ marginLeft: "auto", fontSize: 22 }}>
+          {open ? "▲" : "▼"}
+        </span>
+      </button>
+      <div
+        style={{
+          maxHeight: open ? 1000 : 0,
+          transition: "max-height 0.4s ease",
+          padding: open ? "16px 24px" : "0 24px",
+          fontSize: 16,
+          color: "#444",
+          backgroundColor: "#f9fbff",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
 
 const tabsData = [
   {
@@ -20,19 +141,50 @@ const tabsData = [
     color: "#2563EB",
     content: (
       <>
-        MGM College offers <b>Army</b> and <b>Naval</b> NCC wings for boys and girls. Students with an NCC "C" certificate can earn extra credit for higher education and employment.
-        <br />
-        <br />
-        Activities include parades, training camps, social service, and cadets' participation in major events, adventurous national camps, and leadership programs. The NCC instills discipline, patriotism, and leadership qualities.
-        <br />
-        <br />
-        Cadets receive training for national events like Republic Day and Kargil Vijay Diwas observances.
-        <br />
-        NCC participates in vaccination drives, crime prevention awareness, ecosystem restoration, and International Yoga Day celebrations.
-        <br />
-        The NCC band and cadets actively participate in college and public events, promoting discipline and patriotism.
-        <br />
-        Overall, NCC develops physical fitness, leadership, and community service spirit among students.
+        <ExpandableItem title="Wings Offered" icon={icons.wings}>
+          <BulletList items={["Army and Naval wings for boys and girls."]} />
+        </ExpandableItem>
+        <ExpandableItem title="Benefits" icon={icons.benefits}>
+          <BulletList
+            items={[
+              'NCC "C" certificate grants extra credits for education and jobs.',
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Activities" icon={icons.activities}>
+          <BulletList
+            items={[
+              "Parades",
+              "Training camps",
+              "Adventurous national camps",
+              "Republic Day and Kargil Vijay Diwas events",
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Community Engagement" icon={icons.engagement}>
+          <BulletList
+            items={[
+              "Vaccination drives",
+              "Crime prevention awareness",
+              "Ecosystem restoration",
+              "International Yoga Day",
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Other Highlights" icon={icons.highlights}>
+          <BulletList
+            items={[
+              "NCC band and cadet participation to promote discipline and patriotism.",
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Focus" icon={icons.focus}>
+          <BulletList
+            items={[
+              "Builds discipline, leadership, patriotism, and physical fitness.",
+            ]}
+          />
+        </ExpandableItem>
       </>
     ),
     images: nccImages,
@@ -43,18 +195,45 @@ const tabsData = [
     color: "#16A34A",
     content: (
       <>
-        NSS is rooted in the motto <b>"Not Me But You"</b>. It trains students to take up social responsibility through awareness programs, cleaning drives, plantation, blood donation camps, health, and literacy initiatives.
-        <br />
-        <br />
-        The program emphasizes voluntary service and develops empathy and social commitment among youth.
-        <br />
-        NSS organizes annual special camps involving community service, health checkups, cleaning drives, tree plantations, voter awareness, Covid-19 awareness, and social welfare activities.
-        <br />
-        NSS adopts villages for sustained community development and conducts workshops, orientation programs, and personality development camps.
-        <br />
-        Volunteers participate in youth parliaments, pulse polio campaigns, and national event celebrations.
-        <br />
-        Benefits include leadership training, social responsibility, and recognition at national integration camps, boosting employability and personal growth.
+        <ExpandableItem title="Motto" icon={icons.motto}>
+          <BulletList items={['"Not Me But You"']} />
+        </ExpandableItem>
+        <ExpandableItem title="Purpose" icon={icons.purpose}>
+          <BulletList items={["Instills social responsibility through voluntary service."]} />
+        </ExpandableItem>
+        <ExpandableItem title="Key Activities" icon={icons.activities}>
+          <BulletList
+            items={[
+              "Awareness programs",
+              "Cleaning drives",
+              "Plantation",
+              "Blood donation camps",
+              "Health and literacy initiatives",
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Annual Camps" icon={icons.camps}>
+          <BulletList
+            items={[
+              "Community service",
+              "Health checkups",
+              "Voter & Covid-19 awareness",
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Village Adoption" icon={icons.adoption}>
+          <BulletList items={["Sustained community development initiatives."]} />
+        </ExpandableItem>
+        <ExpandableItem title="Other Programs" icon={icons.programs}>
+          <BulletList
+            items={[
+              "Workshops",
+              "Youth parliaments",
+              "Personality development",
+              "National recognitions",
+            ]}
+          />
+        </ExpandableItem>
       </>
     ),
     images: nssImages,
@@ -65,16 +244,38 @@ const tabsData = [
     color: "#7C3AED",
     content: (
       <>
-        Introduced in 1996, the Rangers’ Wing provides girls with training in self-discipline, cooperation, community service, physical fitness, and leadership skills.
-        <br />
-        <br />
-        The Rangers foster a spirit of selfless service, responsibility, and teamwork among women students.
-        <br />
-        They regularly engage in camps and social service activities including blood donation camps, tree plantation, cleaning drives, and anti-drug rallies.
-        <br />
-        Rangers receive training in first aid, mapping, compass reading, and leadership skills development.
-        <br />
-        Despite lack of external funding, Rangers maintain their own outfits and equipment, demonstrating dedication and self-reliance.
+        <ExpandableItem title="Founded" icon={icons.founded}>
+          <BulletList items={["1996"]} />
+        </ExpandableItem>
+        <ExpandableItem title="Focus" icon={icons.purpose}>
+          <BulletList
+            items={["Girls' wing fostering self-discipline, cooperation, and leadership."]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Activities" icon={icons.activities}>
+          <BulletList
+            items={[
+              "Camps",
+              "Blood donation",
+              "Tree plantation",
+              "Cleaning drives",
+              "Anti-drug rallies",
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Training" icon={icons.training}>
+          <BulletList
+            items={[
+              "First aid",
+              "Mapping",
+              "Compass reading",
+              "Leadership skills development",
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Note" icon={icons.note}>
+          <BulletList items={["Rangers maintain their own equipment, demonstrating self-reliance."]} />
+        </ExpandableItem>
       </>
     ),
     images: rangerImages,
@@ -85,14 +286,33 @@ const tabsData = [
     color: "#F59E0B",
     content: (
       <>
-        The Rovers program complements the Rangers, focusing on boys’ leadership, volunteerism, adventure activities, community development, and character building.
-        <br />
-        <br />
-        Rovers participate in social service projects, survival training, leadership camps, blood donation drives, tree plantation, and social awareness rallies.
-        <br />
-        They develop scouting skills, leadership abilities, first aid knowledge, event organization, and earn merit badges.
-        <br />
-        Together with Rangers, Rovers contribute significantly to college events and community outreach programs, fostering responsible citizenship and personal growth.
+        <ExpandableItem title="Complementary to Rangers" icon={icons.complementary}>
+          <BulletList items={["Focused on boys’ leadership and volunteerism."]} />
+        </ExpandableItem>
+        <ExpandableItem title="Activities" icon={icons.activities}>
+          <BulletList
+            items={[
+              "Social service projects",
+              "Survival training",
+              "Leadership camps",
+              "Blood donation",
+              "Tree plantation",
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Skills" icon={icons.skills}>
+          <BulletList
+            items={[
+              "First aid",
+              "Event organization",
+              "Merit badges",
+              "Scouting skills",
+            ]}
+          />
+        </ExpandableItem>
+        <ExpandableItem title="Contribution" icon={icons.contribution}>
+          <BulletList items={["Active role in college events and community service."]} />
+        </ExpandableItem>
       </>
     ),
     images: roversImages,
@@ -113,108 +333,91 @@ function Carousel({ images }) {
   if (!images?.length) return null;
 
   return (
-    <div style={{ position: "relative", width: "100%", maxHeight: "400px", overflow: "hidden", borderRadius: "10px" }}>
+    <div
+      style={{
+        marginBottom: "1.5rem",
+        borderRadius: 12,
+        overflow: "hidden",
+        boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+      }}
+    >
       <img
         src={images[index]}
-        alt={`slide-${index}`}
-        style={{ width: "100%", height: "auto", objectFit: "cover", transition: "opacity 1s ease-in-out" }}
+        alt={`Slide ${index + 1}`}
+        style={{ width: "100%", height: "auto", display: "block" }}
       />
-      <div style={{ position: "absolute", bottom: 10, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 8 }}>
-        {images.map((_, idx) => (
-          <span
-            key={idx}
-            onClick={() => setIndex(idx)}
-            style={{
-              width: 12,
-              height: 12,
-              borderRadius: "50%",
-              backgroundColor: idx === index ? "#fff" : "rgba(255,255,255,0.5)",
-              cursor: "pointer",
-              border: "1px solid #00000040",
-              transition: "background-color 0.3s",
-            }}
-          />
-        ))}
-      </div>
     </div>
   );
 }
 
-export default function Nss() {
-  const [activeTab, setActiveTab] = useState("ncc");
+export default function NssTabs() {
+  const [activeTab, setActiveTab] = useState(tabsData[0].value);
 
-  const activeTabData = tabsData.find((tab) => tab.value === activeTab);
+  const activeContent = tabsData.find((tab) => tab.value === activeTab);
 
   return (
-    <div style={{ maxWidth: 900, margin: "auto", fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", padding: "1rem" }}>
-      <h1 style={{ textAlign: "center", marginBottom: "1.5rem", fontWeight: "700", fontSize: "2rem" }}>MGM College - NCC, NSS, Rangers & Rovers</h1>
-
-      <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap", marginBottom: "1rem" }}>
+    <div
+      style={{
+        maxWidth: 720,
+        margin: "2rem auto",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        color: "#222",
+        padding: "0 1rem",
+      }}
+    >
+      <h2
+        style={{
+          textAlign: "center",
+          marginBottom: "2rem",
+          fontWeight: "700",
+          fontSize: "2rem",
+          color: "#333",
+        }}
+      >
+        Student Leadership & Service Programs
+      </h2>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 16,
+          marginBottom: 32,
+          flexWrap: "wrap",
+        }}
+      >
         {tabsData.map(({ label, value, color }) => (
           <button
             key={value}
             onClick={() => setActiveTab(value)}
             style={{
-              backgroundColor: activeTab === value ? color : "#e2e8f0",
-              color: activeTab === value ? "#fff" : "#333",
-              border: "none",
-              padding: "0.75rem 1.5rem",
-              borderRadius: 30,
-              fontWeight: "600",
               cursor: "pointer",
-              boxShadow: activeTab === value ? `0 0 10px ${color}` : "none",
+              padding: "12px 28px",
+              fontWeight: activeTab === value ? "700" : "600",
+              color: activeTab === value ? "white" : color,
+              backgroundColor: activeTab === value ? color : "transparent",
+              border: `2px solid ${color}`,
+              borderRadius: 24,
               transition: "all 0.3s ease",
+              boxShadow: activeTab === value ? `0 4px 12px ${color}70` : "none",
               userSelect: "none",
+              flexGrow: 1,
+              minWidth: 140,
+              textAlign: "center",
             }}
-            onMouseEnter={(e) => {
-              if (activeTab !== value) e.currentTarget.style.backgroundColor = color + "bb";
-            }}
-            onMouseLeave={(e) => {
-              if (activeTab !== value) e.currentTarget.style.backgroundColor = "#e2e8f0";
-            }}
+            aria-pressed={activeTab === value}
           >
             {label}
           </button>
         ))}
       </div>
-
-      <div
-        key={activeTab}
-        style={{
-          display: "flex",
-          gap: "2rem",
-          flexWrap: "wrap",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          animation: "fadein 0.5s ease-out",
-        }}
-      >
-        <div
-          style={{
-            flex: "1 1 400px",
-            backgroundColor: "#f9fafb",
-            borderRadius: 12,
-            padding: "1.5rem",
-            boxShadow: "0 8px 16px rgba(0,0,0,0.1)",
-            lineHeight: "1.6",
-            fontSize: "1rem",
-            color: "#111827",
-            minWidth: 320,
-          }}
-        >
-          {activeTabData?.content}
-        </div>
-        <div style={{ flex: "1 1 400px", minWidth: 320 }}>
-          <Carousel images={activeTabData?.images || []} />
-        </div>
-      </div>
-
-      <style>{`
-        @keyframes fadein {
-          from {opacity: 0;}
-          to {opacity: 1;}
-        }
-      `}</style>
+      {activeContent && (
+        <>
+          <Carousel images={activeContent.images} />
+          <div style={{ fontSize: 18, lineHeight: 1.6, color: "#444" }}>
+            {activeContent.content}
+          </div>
+        </>
+      )}
     </div>
   );
 }
